@@ -6,6 +6,8 @@ import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { Header } from "@/components/layout/Header";
+
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -44,6 +46,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
         </ThemeProvider>
       </body>

@@ -12,6 +12,7 @@ const inter = Inter({
 
 // dynamic metadata
 export const metadata: Metadata = {
+  // this placeholder will have the future vercel link
   // metadataBase: new URL("https://kaaryab.vercel.app"),
   title: {
     default: "KaarYab Afghanistan",

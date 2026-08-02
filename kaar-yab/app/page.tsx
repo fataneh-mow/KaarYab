@@ -1,6 +1,8 @@
 
 export default function Home() {
   return (
-    <div>this is the project</div>
+    <div className="h-40 bg-white dark:bg-black">
+      Test
+    </div>
   );
 }

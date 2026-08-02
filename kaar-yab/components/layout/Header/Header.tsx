@@ -1,33 +1,39 @@
 "use client";
 
-import { Menu } from "lucide-react";
-import { Logo, NavLinks} from "./index";
-import { ThemeToggle } from "@/components/common";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+
+import { Button, ThemeToggle } from "@/components/common";
+
+import { Logo, NavLinks, MobileMenu } from "./index";
 
 export default function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     return (
-        <header
-            className="sticky top-0 z-50 w-full border-b border-slate-200/60 bg-white/80  backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80"
-        >
-            <div
-                className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
-            >
+        <header className="sticky top-0 z-50 w-full border-b border-slate-200/60 bg-blue-50 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80">
+            <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 <Logo />
+
                 <NavLinks />
+
                 <div className="flex items-center gap-3">
                     <ThemeToggle />
-                    {/* btn has to become reuslabe */}
-                    <button
-                        type="button"
-                        className="flex size-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 lg:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                        aria-label="Open menu"
+
+                    <Button
+                        variant="ghost"
+                        className="lg:hidden"
+                        onClick={() => setIsMenuOpen((prev) => !prev)}
                     >
-                        <Menu size={22} />
-                    </button>
-
+                        {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                    </Button>
                 </div>
-
             </div>
+
+            <MobileMenu
+                open={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+            />
         </header>
     );
 }

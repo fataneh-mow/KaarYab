@@ -1,10 +1,13 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
-body {
-    @apply bg-white text-slate-900;
+:root {
+    --skeleton-base: #e2e8f0;
+    --skeleton-highlight: #f8fafc;
 }
 
-.dark body {
-    @apply bg-slate-950 text-slate-100;
+.dark {
+    --skeleton-base: #1e293b;
+    --skeleton-highlight: #334155;
 }

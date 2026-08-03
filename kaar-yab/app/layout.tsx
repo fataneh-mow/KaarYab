@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -30,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} flex min-h-screen flex-col`}>
         <Toaster
           position="top-right"
           reverseOrder={false}
@@ -44,7 +47,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

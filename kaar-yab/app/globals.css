@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
-body{
-    background-color: white;
-    color: black
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+    --skeleton-base: #e2e8f0;
+    --skeleton-highlight: #f8fafc;
+}
+
+.dark {
+    --skeleton-base: #1e293b;
+    --skeleton-highlight: #334155;
 }

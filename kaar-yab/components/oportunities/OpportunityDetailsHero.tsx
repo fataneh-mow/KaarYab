@@ -27,7 +27,7 @@ export default function OpportunityDetailsHero({
 
     return (
 
-        <section
+       <section
             className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-blue-900 to-indigo-950 py-35 text-white"
         >
 

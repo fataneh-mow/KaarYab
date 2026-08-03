@@ -28,7 +28,7 @@ export default function OpportunityCard({
 
             <div className="mb-5 flex items-start justify-between gap-4">
 
-                <Badge>
+                <Badge variant="warning">
                     {opportunity.category}
                 </Badge>
 

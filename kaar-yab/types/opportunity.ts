@@ -11,6 +11,7 @@ export enum OpportunityCategory {
 export enum OpportunityStatus {
   ACTIVE = "Active",
   CLOSED = "Closed",
+  PENDING = "Pending",
 }
 
 export enum OpportunityType {

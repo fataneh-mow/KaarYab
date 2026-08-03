@@ -17,10 +17,10 @@ export default function Badge({
             "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
 
         success:
-            "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300",
+            "bg-green-100 text-green-700 dark:bg-green-500 dark:text-green-50",
 
         warning:
-            "bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300",
+            "bg-yellow-100 text-yellow-700 dark:bg-yellow-500 dark:text-yellow-50",
 
         danger:
             "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",

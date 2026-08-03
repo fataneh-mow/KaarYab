@@ -32,9 +32,9 @@ export default function OpportunityCard({
                     {opportunity.category}
                 </Badge>
 
-                <span className="text-sm text-slate-500 dark:text-slate-400">
+                <Badge variant="success">
                     {opportunity.type}
-                </span>
+                </Badge>
 
             </div>
 

@@ -236,30 +236,9 @@ export default function DashboardLayout({
                 "
             >
 
+                <aside className="sticky top-28 hidden h-fit w-64 shrink-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:block dark:border-slate-800 dark:bg-slate-950">
 
-                <aside
-                    className="
-                    hidden
-                    w-64
-                    shrink-0
-                    rounded-2xl
-                    border
-                    border-slate-200
-                    bg-white
-                    p-4
-                    shadow-sm
-                    lg:block
-                    dark:border-slate-800
-                    dark:bg-slate-950
-                    "
-                >
-
-
-                    <nav
-                        className="
-                        space-y-2
-                        "
-                    >
+                    <nav className="space-y-2">
 
                         <DashboardLink
                             href="/dashboard"
@@ -293,10 +272,6 @@ export default function DashboardLayout({
 
 
                 </aside>
-
-
-
-
                 <main
                     className="
                     flex-1

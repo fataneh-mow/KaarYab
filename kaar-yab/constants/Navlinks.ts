@@ -12,6 +12,10 @@ export const links = [
     href: "/dashboard",
   },
   {
+    name: "Saved",
+    href: "/saved",
+  },
+  {
     name: "About",
     href: "/about",
   },

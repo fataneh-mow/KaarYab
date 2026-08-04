@@ -10,6 +10,7 @@ export const selectFilteredOpportunities = createSelector(
         (state: RootState) => state.opportunities.selectedCategory,
         (state: RootState) => state.opportunities.selectedType,
         (state: RootState) => state.opportunities.selectedLocation,
+        (state: RootState) => state.opportunities.selectedDeadline,
     ],
 
     (
@@ -18,6 +19,7 @@ export const selectFilteredOpportunities = createSelector(
         selectedCategory,
         selectedType,
         selectedLocation,
+        selectedDeadline
     ) => {
 
         return opportunities.filter((opportunity) => {
@@ -49,17 +51,18 @@ export const selectFilteredOpportunities = createSelector(
                 !selectedLocation ||
                 opportunity.location === selectedLocation;
 
+            const matchesDeadline =
+                !selectedDeadline ||
+                opportunity.deadline === selectedDeadline;
 
 
             return (
                 matchesSearch &&
                 matchesCategory &&
                 matchesType &&
-                matchesLocation
+                matchesLocation &&
+                matchesDeadline
             );
-
         });
-
     }
-
 );

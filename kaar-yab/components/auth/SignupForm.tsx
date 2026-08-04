@@ -17,9 +17,13 @@ import {
     SignupFormData,
 } from "@/lib/validations/signupSchema";
 
+import { useRouter } from "next/navigation";
+import { v4 as uuid } from "uuid";
+import { saveUser } from "@/lib/userStorage";
+import type { User } from "@/types/auth";
 
 export default function SignupForm() {
-
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -38,13 +42,20 @@ export default function SignupForm() {
         },
     });
 
-
-
     const onSubmit = async (
-        data:SignupFormData
+        data: SignupFormData
     ) => {
 
-        console.log(data);
+
+        const user: User = {
+            id: uuid(),
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role: "user",
+        };
+
+        saveUser(user);
 
         reset();
 
@@ -52,9 +63,8 @@ export default function SignupForm() {
             "Account created successfully!"
         );
 
+        router.push("/login");
     };
-
-
 
     return (
 

@@ -22,40 +22,38 @@ import {
     BriefcaseBusiness,
     FileText,
     Link,
-    Building2,
-    MapPin,
-    CalendarDays,
-    Tag,
 } from "lucide-react";
-
 import {
     Input,
     Button,
 } from "@/components/common";
-
 import {
     opportunitySchema,
     OpportunityFormData,
 } from "@/lib/validations/opportunitySchema";
-
 import {
     saveOpportunity,
+    updateOpportunity,
 } from "@/lib/opportunityStorage";
-
 import {
     useAuth,
 } from "@/hooks/useAuth";
-
-
-export default function OpportunityForm(){
-
+import {
+    Opportunity,
+} from "@/types/opportunity";
+import { useEffect } from "react";
+export default function OpportunityForm({
+    mode = "add",
+    initialData,
+}:{
+    mode?: "add" | "edit";
+    initialData?: Opportunity;
+}){
     const router = useRouter();
 
     const {
         user,
     } = useAuth();
-
-
     const {
         register,
         handleSubmit,
@@ -63,7 +61,7 @@ export default function OpportunityForm(){
         formState:{
             errors,
             isSubmitting,
-        },
+        }
     } = useForm<OpportunityFormData>({
         resolver:zodResolver(opportunitySchema),
         defaultValues:{
@@ -79,14 +77,35 @@ export default function OpportunityForm(){
             tags:"",
         },
     });
+    useEffect(() => {
+        if(initialData){
+            reset({
+                title:initialData.title,
+                organization:initialData.organization,
+                category:initialData.category,
+                location:initialData.location,
+                type:initialData.type,
+                deadline:initialData.deadline,
+                description:initialData.description,
+                requirements:Array.isArray(initialData.requirements)
+                    ? initialData.requirements.join(", ")
+                    : initialData.requirements,
+                applyLink:initialData.applyLink,
+                tags:Array.isArray(initialData.tags)
+                    ? initialData.tags.join(", ")
+                    : initialData.tags,
 
+            });
 
+        }
+    },[
+        initialData,
+        reset,
+    ]);
 
     const onSubmit = async(
         data:OpportunityFormData
     )=>{
-
-
         if(!user){
 
             toast.error(
@@ -98,171 +117,109 @@ export default function OpportunityForm(){
             return;
 
         }
-
-
-
-        saveOpportunity({
-
-            id:uuid(),
-
+        const opportunity = {
             title:data.title,
-
             organization:data.organization,
-
             category:data.category,
-
             location:data.location,
-
             type:data.type,
-
             deadline:data.deadline,
-
             description:data.description,
-
             requirements:data.requirements
                 .split(",")
                 .map(item=>item.trim()),
 
             applyLink:data.applyLink,
-
             tags:data.tags
                 .split(",")
                 .map(item=>item.trim()),
+        };
 
-            createdBy:user.id,
+        if(mode === "edit" && initialData){
+            updateOpportunity({
 
-            createdAt:new Date()
-                .toISOString(),
+                ...initialData,
 
-        });
+                ...opportunity,
 
-
-
+            });
+            toast.success(
+                "Opportunity updated successfully!"
+            );
+        }
+        else{
+            saveOpportunity({
+                id:uuid(),
+                ...opportunity,
+                createdBy:user.id,
+                createdAt:new Date().toISOString(),
+            });
+            toast.success(
+                "Opportunity added successfully!"
+            );
+        }
         reset();
-
-
-        toast.success(
-            "Opportunity added successfully!"
-        );
-
-
         router.push(
-            "/dashboard"
+            "/dashboard/my-opportunities"
         );
-
     };
-
-
-
     return (
-
-        <div
-            className="mx-auto max-w-5xl space-y-8 py-10"
-        >
-
-
-            <section
-                className="rounded-3xl bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-950 p-8 text-white shadow-xl"
-            >
-
-                <div
-                    className="flex items-center gap-5"
-                >
-
-                    <div
-                        className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20"
-                    >
+        <div className="mx-auto max-w-5xl space-y-8 py-10">
+            <section className="rounded-3xl bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-950 p-8 text-white shadow-xl">
+                <div className="flex items-center gap-5">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20">
 
                         <BriefcaseBusiness size={32}/>
 
                     </div>
-
-
                     <div>
-
-                        <h1
-                            className="text-3xl font-extrabold sm:text-4xl"
-                        >
-                            Add Opportunity
+                        <h1 className="text-3xl font-bold">
+                            {
+                                mode === "edit"
+                                ? "Edit Opportunity"
+                                : "Add Opportunity"
+                            }
                         </h1>
+                        <p className="mt-2 text-sm text-white/80">
 
-
-                        <p
-                            className="mt-2 max-w-xl text-sm text-white/80"
-                        >
-                            Share jobs, internships, scholarships and learning opportunities.
+                            {
+                                mode === "edit"
+                                ? "Update your opportunity information."
+                                : "Share jobs, internships, scholarships and learning opportunities."
+                            }
                         </p>
-
                     </div>
-
                 </div>
-
-
             </section>
-
-
-
-
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-8"
             >
+                <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <h2 className="mb-6 text-xl font-bold text-slate-900 dark:text-white">
+                        Basic Information
+                    </h2>
 
+                    <div className="grid gap-5 md:grid-cols-2">
 
-                <section
-                    className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950"
-                >
-
-                    <SectionTitle
-                        icon={<Building2 size={22}/>}
-                        title="Basic Information"
-                        description="Add the main information about this opportunity."
-                    />
-
-
-                    <div
-                        className="grid gap-6 md:grid-cols-2"
-                    >
-
-
-                        <Field
-                            label="Title"
-                            error={errors.title?.message}
-                        >
-
+                        <Field error={errors.title?.message}>
                             <Input
-                                placeholder="Frontend Developer Internship"
+                                placeholder="Opportunity title"
                                 {...register("title")}
                             />
-
                         </Field>
 
-
-
-
-                        <Field
-                            label="Organization"
-                            error={errors.organization?.message}
-                        >
-
+                        <Field error={errors.organization?.message}>
                             <Input
-                                placeholder="Organization name"
+                                placeholder="Organization"
                                 {...register("organization")}
                             />
-
                         </Field>
 
-
-
-
-
-                        <Field
-                            label="Category"
-                            error={errors.category?.message}
-                        >
-
-                            <Select
+                        <Field error={errors.category?.message}>
+                            <select
                                 {...register("category")}
+                                className="h-11 w-full rounded-xl border border-slate-200 px-4 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                             >
 
                                 <option value="">
@@ -285,26 +242,19 @@ export default function OpportunityForm(){
                                     Course
                                 </option>
 
-                                <option value="volunteer">
-                                    Volunteer
-                                </option>
-
-                            </Select>
-
-
+                            </select>
                         </Field>
 
-
-
-
-
-                        <Field
-                            label="Opportunity Type"
-                            error={errors.type?.message}
-                        >
-
-                            <Select
+                        <Field error={errors.location?.message}>
+                            <Input
+                                placeholder="Location"
+                                {...register("location")}
+                            />
+                        </Field>
+                        <Field error={errors.type?.message}>
+                            <select
                                 {...register("type")}
+                                className="h-11 w-full rounded-xl border border-slate-200 px-4 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                             >
 
                                 <option value="">
@@ -323,346 +273,113 @@ export default function OpportunityForm(){
                                     Hybrid
                                 </option>
 
-                            </Select>
-
-
+                            </select>
                         </Field>
-
-
-
-
-
-                        <Field
-                            label="Location"
-                            error={errors.location?.message}
-                        >
-
-                            <div
-                                className="relative"
-                            >
-
-                                <MapPin
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                                    size={18}
-                                />
-
-
-                                <Input
-                                    className="pl-10"
-                                    placeholder="Herat, Kabul..."
-                                    {...register("location")}
-                                />
-
-                            </div>
-
-
+                        <Field error={errors.deadline?.message}>
+                            <Input
+                                type="date"
+                                {...register("deadline")}
+                            />
                         </Field>
+                    </div>
+                </section>
 
+                <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <div className="mb-6 flex items-center gap-3">
 
+                        <FileText className="text-sky-600"/>
 
-
-
-                        <Field
-                            label="Deadline"
-                            error={errors.deadline?.message}
-                        >
-
-                            <div
-                                className="relative"
-                            >
-
-                                <CalendarDays
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                                    size={18}
-                                />
-
-
-                                <Input
-                                    type="date"
-                                    className="pl-10"
-                                    {...register("deadline")}
-                                />
-
-                            </div>
-
-
-                        </Field>
-
+                        <h2 className="text-xl font-bold dark:text-white">
+                            Details
+                        </h2>
 
                     </div>
 
-
-                </section>
-
-
-
-
-
-                <section
-                    className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950"
-                >
-
-                    <SectionTitle
-                        icon={<FileText size={22}/>}
-                        title="Opportunity Details"
-                        description="Explain the opportunity and requirements."
-                    />
-
-
-                    <Field
-                        label="Description"
-                        error={errors.description?.message}
-                    >
+                    <Field error={errors.description?.message}>
 
                         <textarea
                             {...register("description")}
-                            placeholder="Describe the opportunity..."
-                            className="min-h-44 w-full rounded-2xl border border-slate-200 p-4 text-sm outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                            placeholder="Description"
+                            className="min-h-40 w-full rounded-2xl border p-4 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                         />
 
+                    </Field>
+                    <Field error={errors.requirements?.message}>
+
+                        <Input
+                            placeholder="Requirements separated by commas"
+                            {...register("requirements")}
+                        />
 
                     </Field>
 
-
-
-
-                    <div
-                        className="mt-6"
-                    >
-
-                        <Field
-                            label="Requirements"
-                            error={errors.requirements?.message}
-                        >
-
-                            <Input
-                                placeholder="React, English, Communication"
-                                {...register("requirements")}
-                            />
-
-
-                        </Field>
-
-
-                    </div>
-
-
                 </section>
 
+                <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <div className="mb-6 flex items-center gap-3">
 
+                        <Link className="text-green-600"/>
 
+                        <h2 className="text-xl font-bold dark:text-white">
+                            Application
+                        </h2>
 
-
-                <section
-                    className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950"
-                >
-
-                    <SectionTitle
-                        icon={<Link size={22}/>}
-                        title="Application"
-                        description="Add application details and tags."
-                    />
-
-
-                    <Field
-                        label="Application Link"
-                        error={errors.applyLink?.message}
-                    >
+                    </div>
+                    <Field error={errors.applyLink?.message}>
 
                         <Input
-                            placeholder="https://example.com"
+                            placeholder="Application link"
                             {...register("applyLink")}
                         />
 
+                    </Field>
+                    <Field error={errors.tags?.message}>
+
+                        <Input
+                            placeholder="Tags"
+                            {...register("tags")}
+                        />
 
                     </Field>
-
-
-
-
-                    <div
-                        className="mt-6"
-                    >
-
-                        <Field
-                            label="Tags"
-                            error={errors.tags?.message}
-                        >
-
-                            <div
-                                className="relative"
-                            >
-
-                                <Tag
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                                    size={18}
-                                />
-
-
-                                <Input
-                                    className="pl-10"
-                                    placeholder="React, Remote, Beginner"
-                                    {...register("tags")}
-                                />
-
-
-                            </div>
-
-
-                        </Field>
-
-
-                    </div>
-
-
                 </section>
-
-
-
 
                 <Button
                     type="submit"
                     className="w-full"
                 >
-
                     {
                         isSubmitting
-                        ? "Publishing..."
+                        ? "Saving..."
+                        : mode === "edit"
+                        ? "Update Opportunity"
                         : "Publish Opportunity"
                     }
-
                 </Button>
-
-
             </form>
-
-
         </div>
 
     );
 
 }
-
-
-
-
-
-function SectionTitle({
-    icon,
-    title,
-    description,
-}:{
-    icon:React.ReactNode;
-    title:string;
-    description:string;
-}){
-
-    return (
-
-        <div
-            className="mb-7 flex items-center gap-3"
-        >
-
-            <div
-                className="rounded-xl bg-sky-100 p-3 text-sky-600 dark:bg-sky-950"
-            >
-
-                {icon}
-
-            </div>
-
-
-            <div>
-
-                <h2
-                    className="text-xl font-bold text-slate-900 dark:text-white"
-                >
-                    {title}
-                </h2>
-
-
-                <p
-                    className="text-sm text-slate-500 dark:text-slate-400"
-                >
-                    {description}
-                </p>
-
-            </div>
-
-
-        </div>
-
-    );
-
-}
-
-
-
-
 
 function Field({
     children,
-    label,
     error,
 }:{
     children:React.ReactNode;
-    label:string;
     error?:string;
 }){
-
     return (
 
-        <div
-            className="space-y-2"
-        >
-
-            <label
-                className="text-sm font-semibold text-slate-700 dark:text-slate-300"
-            >
-                {label}
-            </label>
-
-
+        <div className="space-y-2">
             {children}
-
-
             {
                 error && (
-                    <p
-                        className="text-sm text-red-500"
-                    >
+                    <p className="text-sm text-red-500">
                         {error}
                     </p>
-                )
+               )
             }
-
-
         </div>
-
     );
-
-}
-
-
-
-
-
-function Select({
-    children,
-    ...props
-}:React.SelectHTMLAttributes<HTMLSelectElement>){
-
-    return (
-
-        <select
-            {...props}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-        >
-
-            {children}
-
-        </select>
-
-    );
-
 }

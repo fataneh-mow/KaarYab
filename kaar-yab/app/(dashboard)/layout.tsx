@@ -262,7 +262,7 @@ export default function DashboardLayout({
 
 
                         <DashboardLink
-                            href="/add-opportunity"
+                            href="/dashboard/add-opportunity"
                             icon={PlusCircle}
                             label="Add Opportunity"
                         />

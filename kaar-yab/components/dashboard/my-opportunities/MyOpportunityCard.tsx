@@ -7,9 +7,17 @@ import {
     MapPin,
 } from "lucide-react";
 
+import Link from "next/link";
+
+import toast from "react-hot-toast";
+
 import {
     Opportunity,
 } from "@/types/opportunity";
+
+import {
+    deleteOpportunity,
+} from "@/lib/opportunityStorage";
 
 
 export default function MyOpportunityCard({
@@ -17,6 +25,35 @@ export default function MyOpportunityCard({
 }:{
     opportunity:Opportunity;
 }){
+
+
+    const handleDelete = () => {
+
+        const confirmed =
+            window.confirm(
+                "Are you sure you want to delete this opportunity?"
+            );
+
+
+        if(!confirmed){
+            return;
+        }
+
+
+        deleteOpportunity(
+            opportunity.id
+        );
+
+
+        toast.success(
+            "Opportunity deleted successfully"
+        );
+
+
+        window.location.reload();
+
+    };
+
 
 
     return (
@@ -38,6 +75,7 @@ export default function MyOpportunityCard({
                         {opportunity.organization}
                     </p>
 
+
                 </div>
 
 
@@ -50,7 +88,6 @@ export default function MyOpportunityCard({
 
 
             </div>
-
 
 
 
@@ -74,6 +111,7 @@ export default function MyOpportunityCard({
                     <CalendarDays size={16}/>
 
                     Deadline:
+
                     <span className="font-medium">
                         {opportunity.deadline}
                     </span>
@@ -82,7 +120,6 @@ export default function MyOpportunityCard({
 
 
             </div>
-
 
 
 
@@ -113,18 +150,21 @@ export default function MyOpportunityCard({
                 <div className="flex gap-2">
 
 
-                    <button
+                    <Link
+                        href={`/dashboard/edit-opportunity/${opportunity.id}`}
                         className="rounded-xl p-2 text-sky-600 transition hover:bg-sky-100 dark:hover:bg-sky-950"
                     >
 
                         <Edit size={18}/>
 
-                    </button>
+                    </Link>
+
 
 
 
 
                     <button
+                        onClick={handleDelete}
                         className="rounded-xl p-2 text-red-600 transition hover:bg-red-100 dark:hover:bg-red-950"
                     >
 

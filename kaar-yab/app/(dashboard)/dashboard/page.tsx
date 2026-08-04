@@ -93,7 +93,7 @@ export default function UserDashboardPage() {
 
 
                 <Link
-                    href="/add-opportunity"
+                    href="/dashboard/add-opportunity"
                     className="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-950"
                 >
 

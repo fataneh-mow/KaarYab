@@ -111,24 +111,6 @@ export default function MyOpportunitiesPage(){
                     </div>
 
 
-
-                    <div className="relative w-full md:w-72">
-
-                        <Search
-                            size={18}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                        />
-
-
-                        <input
-                            placeholder="Search opportunities..."
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-transparent pl-10 pr-4 text-sm text-slate-900 outline-none focus:border-sky-500 dark:border-slate-700 dark:text-white"
-                        />
-
-
-                    </div>
-
-
                 </div>
 
 

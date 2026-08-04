@@ -31,6 +31,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: true,
         createdAt: "2026-08-01",
+        createdBy: "mockData"
     },
 
 
@@ -58,6 +59,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: true,
         createdAt: "2026-08-02",
+        createdBy: "mockData"
     },
 
 
@@ -85,6 +87,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: true,
         createdAt: "2026-08-03",
+        createdBy: "mockData"
     },
 
 
@@ -111,6 +114,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-04",
+        createdBy: "mockData"
     },
 
 
@@ -137,6 +141,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-05",
+        createdBy: "mockData"
     },
 
 
@@ -162,6 +167,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-06",
+        createdBy: "mockData"
     },
 
 
@@ -187,6 +193,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-07",
+        createdBy: "mockData"
     },
 
 
@@ -213,6 +220,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-08",
+        createdBy: "mockData"
     },
 
 
@@ -238,6 +246,7 @@ export const opportunities: Opportunity[] = [
         ],
         featured: true,
         createdAt: "2026-08-09",
+        createdBy: "mockData"
     },
 
 
@@ -264,5 +273,6 @@ export const opportunities: Opportunity[] = [
         ],
         featured: false,
         createdAt: "2026-08-10",
+        createdBy: "mockData"
     },
 ];

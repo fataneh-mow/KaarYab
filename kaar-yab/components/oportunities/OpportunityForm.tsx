@@ -12,10 +12,6 @@ import {
     useRouter,
 } from "next/navigation";
 
-import {
-    v4 as uuid,
-} from "uuid";
-
 import toast from "react-hot-toast";
 
 import {
@@ -39,7 +35,7 @@ import {
     useAuth,
 } from "@/hooks/useAuth";
 import {
-    Opportunity,
+    Opportunity,OpportunityStatus
 } from "@/types/opportunity";
 import { useEffect } from "react";
 
@@ -133,7 +129,11 @@ export default function OpportunityForm({
                     data.tags
                     .split(",")
                     .map(item=>item.trim()),
+
                 createdBy:user.id,
+
+                status: OpportunityStatus.PENDING,
+                featured:false,
             };
             if(
                 mode==="edit" &&

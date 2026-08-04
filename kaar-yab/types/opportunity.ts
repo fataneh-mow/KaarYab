@@ -48,4 +48,7 @@ export interface Opportunity {
 
     createdAt:string;
 
+    featured:boolean;
+
+  status: OpportunityStatus;
 }

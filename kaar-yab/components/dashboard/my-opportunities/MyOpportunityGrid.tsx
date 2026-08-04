@@ -6,6 +6,7 @@ import {
 
 import {
     useAppSelector,
+    useAppDispatch,
 } from "@/hooks/redux";
 
 import {
@@ -19,14 +20,17 @@ import {
 import MyOpportunityCard from "./MyOpportunityCard";
 import EmptyState from "./EmptyState";
 
+import {
+    deleteOpportunity,
+} from "@/store/slices/opportunitySlice";
 
 export default function MyOpportunityGrid(){
+    const dispatch = useAppDispatch();
 
     const {
         user,
     } = useAuth();
-
-
+   
     const opportunities = useAppSelector(
         selectFilteredOpportunities
     );
@@ -53,6 +57,14 @@ export default function MyOpportunityGrid(){
         );
     }
 
+    const handleDelete = (id:string)=>{
+
+        dispatch(
+            deleteOpportunity(id)
+        );
+
+    };
+
     return (
 
         <section className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -63,6 +75,7 @@ export default function MyOpportunityGrid(){
                         <MyOpportunityCard
                             key={opportunity.id}
                             opportunity={opportunity}
+                            onDelete={handleDelete}
                         />
 
                     )

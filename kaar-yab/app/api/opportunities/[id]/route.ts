@@ -1,46 +1,73 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { opportunities } from "@/data/opportunities";
 
 
-
 export async function GET(
-    request:Request,
+    request: NextRequest,
     {
         params,
-    }:{
-        params:{
-            id:string;
-        }
+    }: {
+        params: Promise<{
+            id: string;
+        }>;
     }
-){
+) {
 
-    const opportunity =
-        opportunities.find(
-            opportunity =>
-                opportunity.id === params.id
+    try {
+
+        const {
+            id,
+        } = await params;
+
+
+        console.log("Requested ID:", id);
+
+
+        const opportunity =
+            opportunities.find(
+                opportunity =>
+                    opportunity.id === id
+            );
+
+
+        if (!opportunity) {
+
+            return NextResponse.json(
+                {
+                    message: "Opportunity not found",
+                },
+                {
+                    status: 404,
+                }
+            );
+
+        }
+
+
+        return NextResponse.json(
+            opportunity,
+            {
+                status: 200,
+            }
         );
 
 
-    if(!opportunity){
+    } catch (error) {
+
+        console.error(error);
+
 
         return NextResponse.json(
             {
-                message:"Opportunity not found",
+                message:
+                    "Failed to fetch opportunity",
             },
             {
-                status:404,
+                status: 500,
             }
         );
 
     }
-
-
-    return NextResponse.json(
-        opportunity,
-        {
-            status:200,
-        }
-    );
 
 }

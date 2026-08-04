@@ -47,27 +47,3 @@ export async function getOpportunityById(
 
 }
 
-export async function getFeaturedOpportunities(): Promise<Opportunity[]> {
-
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/opportunities`,
-        {
-            cache: "no-store",
-        }
-    );
-
-
-    if(!response.ok){
-        throw new Error(
-            "Failed to fetch opportunities"
-        );
-    }
-
-
-    const opportunities: Opportunity[] =
-        await response.json();
-
-
-    return opportunities.slice(0,3);
-
-}

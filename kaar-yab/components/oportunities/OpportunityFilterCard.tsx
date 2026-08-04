@@ -11,17 +11,15 @@ import {
 } from "@/hooks/redux";
 
 import {
+    resetFilters,
     setCategory,
     setLocation,
     setType,
-    resetFilters,
 } from "@/store/slices/opportunitySlice";
-
 
 export default function OpportunityFilterCard() {
 
     const dispatch = useAppDispatch();
-
 
     const {
         selectedCategory,
@@ -31,40 +29,13 @@ export default function OpportunityFilterCard() {
         (state) => state.opportunities
     );
 
-
     return (
-
-        <div
-            className="
-            absolute
-            right-0
-            top-14
-            z-50
-            w-72
-            rounded-2xl
-            border
-            border-slate-200
-            bg-white
-            p-5
-            shadow-xl
-            dark:border-slate-800
-            dark:bg-slate-950
-            "
-        >
-
+        <div className="absolute right-0 top-14 z-50 w-72 rounded-2xl border border-slate-200 bg-white p-5 shadow-xl dark:border-slate-800 dark:bg-slate-950">
             <div className="space-y-4">
-
-
-                {/* Category */}
-
                 <div>
-
-                    <label
-                        className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                    >
+                    <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
                         Category
                     </label>
-
 
                     <select
                         value={selectedCategory ?? ""}
@@ -77,48 +48,27 @@ export default function OpportunityFilterCard() {
                                 )
                             )
                         }
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                     >
-
                         <option value="">
                             All Categories
                         </option>
 
-
-                        {
-                            Object.values(
-                                OpportunityCategory
-                            ).map((category) => (
-
-                                <option
-                                    key={category}
-                                    value={category}
-                                >
-                                    {category}
-                                </option>
-
-                            ))
-                        }
-
-
+                        {Object.values(OpportunityCategory).map((category) => (
+                            <option
+                                key={category}
+                                value={category}
+                            >
+                                {category}
+                            </option>
+                        ))}
                     </select>
-
-
                 </div>
 
-
-
-
-                {/* Type */}
-
                 <div>
-
-                    <label
-                        className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                    >
+                    <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
                         Type
                     </label>
-
 
                     <select
                         value={selectedType ?? ""}
@@ -131,48 +81,27 @@ export default function OpportunityFilterCard() {
                                 )
                             )
                         }
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                     >
-
                         <option value="">
                             All Types
                         </option>
 
-
-                        {
-                            Object.values(
-                                OpportunityType
-                            ).map((type) => (
-
-                                <option
-                                    key={type}
-                                    value={type}
-                                >
-                                    {type}
-                                </option>
-
-                            ))
-                        }
-
-
+                        {Object.values(OpportunityType).map((type) => (
+                            <option
+                                key={type}
+                                value={type}
+                            >
+                                {type}
+                            </option>
+                        ))}
                     </select>
-
-
                 </div>
 
-
-
-
-                {/* Location */}
-
                 <div>
-
-                    <label
-                        className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                    >
+                    <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
                         Location
                     </label>
-
 
                     <input
                         value={selectedLocation ?? ""}
@@ -184,36 +113,19 @@ export default function OpportunityFilterCard() {
                             )
                         }
                         placeholder="Example: Kabul"
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                     />
-
                 </div>
 
-
-
                 <button
-
                     type="button"
-
-                    onClick={() =>
-                        dispatch(
-                            resetFilters()
-                        )
-                    }
-
+                    onClick={() => dispatch(resetFilters())}
                     className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-
                 >
-
                     Reset Filters
-
                 </button>
-
-
             </div>
-
-
         </div>
-
     );
+
 }

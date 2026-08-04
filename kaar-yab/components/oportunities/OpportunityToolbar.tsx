@@ -33,15 +33,12 @@ export default function OpportunityToolbar() {
         (state) => state.opportunities
     );
 
+
     const filterRef = useClickOutside<HTMLDivElement>(
         () => {
 
             if (isFilterOpen) {
-
-                dispatch(
-                    toggleFilter()
-                );
-
+                dispatch(toggleFilter());
             }
 
         }
@@ -52,154 +49,65 @@ export default function OpportunityToolbar() {
 
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:px-6 lg:px-8">
 
+            <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950 lg:flex-row lg:items-center">
 
-            <div
-                className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:flex-row lg:items-center dark:border-slate-800 dark:bg-slate-950"
-            >
-
-
-                {/* Search */}
-
-                <div
-                    className="flex w-full items-center gap-3 rounded-xl border border-slate-200 px-4 lg:flex-1 dark:border-slate-700"
-                >
+                <div className="flex w-full items-center gap-3 rounded-xl border border-slate-200 px-4 dark:border-slate-700 lg:flex-1">
 
                     <Search
                         size={20}
                         className="text-slate-400"
                     />
 
-
                     <input
-
                         value={searchTerm}
-
                         onChange={(event) =>
                             dispatch(
-                                setSearchTerm(
-                                    event.target.value
-                                )
+                                setSearchTerm(event.target.value)
                             )
                         }
-
                         placeholder="Search opportunities..."
-
                         className="w-full bg-transparent py-3 text-slate-700 outline-none dark:text-white"
-
                     />
 
                 </div>
 
-
-
-
-                {/* Filter + View Controls */}
 
                 <div
                     ref={filterRef}
                     className="relative flex w-full items-center gap-3 lg:w-auto"
                 >
 
-
-                    {/* Filter Button */}
-
                     <button
-
                         type="button"
-
-                        onClick={() =>
-                            dispatch(
-                                toggleFilter()
-                            )
-                        }
-
+                        onClick={() => dispatch(toggleFilter())}
                         className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-sky-600 px-5 py-3 text-white transition hover:bg-sky-700 lg:flex-none"
-
                     >
-
                         <Filter size={18} />
-
                         Filters
-
                     </button>
 
 
-
-
-
-                    {/* View Toggle */}
-
-                    <div
-                        className="flex items-center gap-2"
-                    >
-
-
-                        {/* Grid */}
+                    <div className="flex items-center gap-2">
 
                         <button
-
                             type="button"
-
-                            onClick={() =>
-                                dispatch(
-                                    setViewMode("grid")
-                                )
-                            }
-
-                            className={`
-                                rounded-lg border p-3 transition
-                                ${
-                                    viewMode === "grid"
-                                        ? "bg-sky-600 text-white"
-                                        : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300"
-                                }
-                            `}
-
+                            onClick={() => dispatch(setViewMode("grid"))}
+                            className={`rounded-lg border p-3 transition ${viewMode === "grid" ? "bg-sky-600 text-white" : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300"}`}
                         >
-
-                            <Grid2X2 size={20} />
-
+                            <Grid2X2 size={20}/>
                         </button>
 
 
-
-
-
-                        {/* List */}
-
                         <button
-
                             type="button"
-
-                            onClick={() =>
-                                dispatch(
-                                    setViewMode("list")
-                                )
-                            }
-
-                            className={`
-                                rounded-lg border p-3 transition
-                                ${
-                                    viewMode === "list"
-                                        ? "bg-sky-600 text-white"
-                                        : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300"
-                                }
-                            `}
-
+                            onClick={() => dispatch(setViewMode("list"))}
+                            className={`rounded-lg border p-3 transition ${viewMode === "list" ? "bg-sky-600 text-white" : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300"}`}
                         >
-
-                            <List size={20} />
-
+                            <List size={20}/>
                         </button>
-
 
                     </div>
 
-
-
-
-
-                    {/* Filter Dropdown */}
 
                     {
                         isFilterOpen && (
@@ -207,12 +115,9 @@ export default function OpportunityToolbar() {
                         )
                     }
 
-
                 </div>
 
-
             </div>
-
 
         </div>
 

@@ -2,12 +2,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import type { RootState } from "@/store";
 
-import {
-    OpportunityCategory,
-    OpportunityType,
-} from "@/types/opportunity";
-
-
 export const selectFilteredOpportunities = createSelector(
 
     [

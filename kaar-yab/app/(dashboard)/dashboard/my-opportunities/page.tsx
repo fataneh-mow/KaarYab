@@ -143,8 +143,12 @@ export default function MyOpportunitiesPage(){
                                     <MyOpportunityCard
                                         key={opportunity.id}
                                         opportunity={opportunity}
+                                        onDelete={(id)=>{
+                                            setOpportunities(prev =>
+                                                prev.filter(item=>item.id !== id)
+                                            );
+                                        }}
                                     />
-
                                 )
                             )
                         }

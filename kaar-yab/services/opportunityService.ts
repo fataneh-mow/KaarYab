@@ -1,0 +1,73 @@
+import { Opportunity } from "@/types/opportunity";
+
+const delay = (ms: number) =>
+    new Promise(resolve => setTimeout(resolve, ms));
+
+export async function getOpportunities(): Promise<Opportunity[]> {
+
+    await delay(2000);
+
+    const response = await fetch(
+        "/api/opportunities",
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Failed to fetch opportunities"
+        );
+    }
+
+    return response.json();
+
+}
+
+export async function getOpportunityById(
+    id: string
+): Promise<Opportunity> {
+
+    await delay(2000);
+
+    const response = await fetch(
+        `/api/opportunities/${id}`,
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Opportunity not found"
+        );
+    }
+
+    return response.json();
+
+}
+
+export async function getFeaturedOpportunities(): Promise<Opportunity[]> {
+
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/opportunities`,
+        {
+            cache: "no-store",
+        }
+    );
+
+
+    if(!response.ok){
+        throw new Error(
+            "Failed to fetch opportunities"
+        );
+    }
+
+
+    const opportunities: Opportunity[] =
+        await response.json();
+
+
+    return opportunities.slice(0,3);
+
+}

@@ -66,8 +66,6 @@ const opportunitySlice = createSlice({
 
 
     reducers: {
-
-
         setSearchTerm(
             state,
             action: PayloadAction<string>
@@ -76,8 +74,6 @@ const opportunitySlice = createSlice({
             state.searchTerm = action.payload;
 
         },
-
-
 
         setCategory(
             state,
@@ -88,8 +84,6 @@ const opportunitySlice = createSlice({
 
         },
 
-
-
         setType(
             state,
             action: PayloadAction<OpportunityType | undefined>
@@ -99,8 +93,6 @@ const opportunitySlice = createSlice({
 
         },
 
-
-
         setLocation(
             state,
             action: PayloadAction<string | undefined>
@@ -109,9 +101,6 @@ const opportunitySlice = createSlice({
             state.selectedLocation = action.payload;
 
         },
-
-
-
         setViewMode(
             state,
             action: PayloadAction<"grid" | "list">
@@ -121,8 +110,6 @@ const opportunitySlice = createSlice({
 
         },
 
-
-
         toggleFilter(
             state
         ){
@@ -130,8 +117,6 @@ const opportunitySlice = createSlice({
             state.isFilterOpen = !state.isFilterOpen;
 
         },
-
-
 
         addOpportunity(
             state,
@@ -163,10 +148,36 @@ const opportunitySlice = createSlice({
             state.selectedLocation = undefined;
         },
 
+        setOpportunities(
+            state,
+            action: PayloadAction<Opportunity[]>
+        ) {
+
+            state.items = action.payload;
+
+        },
+
+        loadStoredOpportunities(
+            state,
+            action: PayloadAction<Opportunity[]>
+        ){
+
+            const defaultIds = new Set(
+                state.items.map(item => item.id)
+            );
+
+            const newItems = action.payload.filter(
+                item => !defaultIds.has(item.id)
+            );
+
+            state.items = [
+                ...newItems,
+                ...state.items,
+            ];
+
+        },
     },
-
 });
-
 
 export const {
     setSearchTerm,
@@ -178,9 +189,8 @@ export const {
     addOpportunity,
     deleteOpportunity,
     resetFilters,
-
+    setOpportunities,
+    loadStoredOpportunities
 } = opportunitySlice.actions;
-
-
 
 export default opportunitySlice.reducer;

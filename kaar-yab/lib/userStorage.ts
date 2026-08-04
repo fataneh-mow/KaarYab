@@ -60,8 +60,7 @@ export function findUser(
     const user =
         users.find(
             (user)=>
-                user.email === email &&
-                user.password === password
+                user.email === email
         );
 
 

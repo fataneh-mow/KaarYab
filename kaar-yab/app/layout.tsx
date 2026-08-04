@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} flex min-h-screen flex-col`}>
         <Toaster
-          position="top-right"
+          position="top-center"
           reverseOrder={false}
           toastOptions={{
             duration: 3000,
@@ -49,11 +49,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReduxProvider>
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
+            {children}
           </ReduxProvider>
         </ThemeProvider>
       </body>

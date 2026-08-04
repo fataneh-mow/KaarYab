@@ -24,14 +24,16 @@ interface OpportunityState {
     searchTerm: string;
 
     selectedCategory?: OpportunityCategory;
-
+    
     selectedType?: OpportunityType;
-
+    
     selectedLocation?: string;
-
+    
     viewMode: "grid" | "list";
-
+    
     isFilterOpen: boolean;
+    
+    selectedDeadline?: string;
 }
 
 
@@ -52,10 +54,8 @@ const initialState: OpportunityState = {
 
     isFilterOpen: false,
 
+    selectedDeadline: undefined,
 };
-
-
-
 
 
 const opportunitySlice = createSlice({
@@ -146,6 +146,7 @@ const opportunitySlice = createSlice({
             state.selectedCategory = undefined;
             state.selectedType = undefined;
             state.selectedLocation = undefined;
+            state.selectedDeadline = undefined
         },
 
         setOpportunities(
@@ -176,6 +177,15 @@ const opportunitySlice = createSlice({
             ];
 
         },
+
+        setDeadline(
+            state,
+            action: PayloadAction<string | undefined>
+        ){
+
+            state.selectedDeadline = action.payload;
+
+        },
     },
 });
 
@@ -190,7 +200,8 @@ export const {
     deleteOpportunity,
     resetFilters,
     setOpportunities,
-    loadStoredOpportunities
+    loadStoredOpportunities,
+    setDeadline
 } = opportunitySlice.actions;
 
 export default opportunitySlice.reducer;

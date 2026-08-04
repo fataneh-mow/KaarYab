@@ -15,6 +15,7 @@ import {
     setCategory,
     setLocation,
     setType,
+    setDeadline
 } from "@/store/slices/opportunitySlice";
 
 export default function OpportunityFilterCard() {
@@ -25,6 +26,7 @@ export default function OpportunityFilterCard() {
         selectedCategory,
         selectedType,
         selectedLocation,
+        selectedDeadline
     } = useAppSelector(
         (state) => state.opportunities
     );
@@ -113,6 +115,25 @@ export default function OpportunityFilterCard() {
                             )
                         }
                         placeholder="Example: Kabul"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                    />
+                </div>
+
+                <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                    Deadline Before
+                </label>
+
+                <input
+                        type="date"
+                        value={selectedDeadline ?? ""}
+                        onChange={(event)=>
+                            dispatch(
+                                setDeadline(
+                                    event.target.value || undefined
+                                )
+                            )
+                        }
                         className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                     />
                 </div>

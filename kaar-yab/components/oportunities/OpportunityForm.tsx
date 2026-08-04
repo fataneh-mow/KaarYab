@@ -32,9 +32,9 @@ import {
     OpportunityFormData,
 } from "@/lib/validations/opportunitySchema";
 import {
-    saveOpportunity,
-    updateOpportunity,
-} from "@/lib/opportunityStorage";
+    createOpportunity,
+    updateOpportunityById,
+} from "@/services/opportunityService";
 import {
     useAuth,
 } from "@/hooks/useAuth";
@@ -42,6 +42,8 @@ import {
     Opportunity,
 } from "@/types/opportunity";
 import { useEffect } from "react";
+
+
 export default function OpportunityForm({
     mode = "add",
     initialData,
@@ -107,61 +109,64 @@ export default function OpportunityForm({
         data:OpportunityFormData
     )=>{
         if(!user){
-
             toast.error(
                 "Please login first"
             );
-
             router.push("/login");
-
             return;
-
         }
-        const opportunity = {
-            title:data.title,
-            organization:data.organization,
-            category:data.category,
-            location:data.location,
-            type:data.type,
-            deadline:data.deadline,
-            description:data.description,
-            requirements:data.requirements
-                .split(",")
-                .map(item=>item.trim()),
-
-            applyLink:data.applyLink,
-            tags:data.tags
-                .split(",")
-                .map(item=>item.trim()),
-        };
-
-        if(mode === "edit" && initialData){
-            updateOpportunity({
-
-                ...initialData,
-
-                ...opportunity,
-
-            });
-            toast.success(
-                "Opportunity updated successfully!"
-            );
-        }
-        else{
-            saveOpportunity({
-                id:uuid(),
-                ...opportunity,
+        try{
+            const opportunityData = {
+                title:data.title,
+                organization:data.organization,
+                category:data.category,
+                location:data.location,
+                type:data.type,
+                deadline:data.deadline,
+                description:data.description,
+                requirements:
+                    data.requirements
+                    .split(",")
+                    .map(item=>item.trim()),
+                applyLink:data.applyLink,
+                tags:
+                    data.tags
+                    .split(",")
+                    .map(item=>item.trim()),
                 createdBy:user.id,
-                createdAt:new Date().toISOString(),
-            });
-            toast.success(
-                "Opportunity added successfully!"
+            };
+            if(
+                mode==="edit" &&
+                initialData
+            ){
+                await updateOpportunityById(
+                    initialData.id,
+                    opportunityData
+                );
+                toast.success(
+                    "Opportunity updated successfully!"
+                );
+            }
+            else{
+                await createOpportunity({
+                    ...opportunityData,
+                    createdBy:user.id,
+                });
+                toast.success(
+                    "Opportunity added successfully!"
+                );
+            }
+            reset();
+            router.push(
+                "/dashboard/my-opportunities"
             );
         }
-        reset();
-        router.push(
-            "/dashboard/my-opportunities"
-        );
+        catch(error){
+            console.error(error);
+            toast.error(
+                "Something went wrong"
+            );
+        }
     };
     return (
         <div className="mx-auto max-w-5xl space-y-8 py-10">
@@ -357,9 +362,7 @@ export default function OpportunityForm({
                 </Button>
             </form>
         </div>
-
     );
-
 }
 
 function Field({

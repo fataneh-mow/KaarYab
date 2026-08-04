@@ -22,8 +22,7 @@ import {
 
 import {
     deleteOpportunity,
-} from "@/lib/opportunityStorage";
-
+} from "@/services/opportunityService";
 
 export default function MyOpportunityCard({
     opportunity, onDelete
@@ -34,24 +33,40 @@ export default function MyOpportunityCard({
 
     const [isDeleteOpen,setIsDeleteOpen] = useState(false);
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
 
-        deleteOpportunity(
-            opportunity.id
-        );
+        try {
 
-        onDelete(
-            opportunity.id
-        );
+            await deleteOpportunity(
+                opportunity.id
+            );
 
-        toast.success(
-            "Opportunity deleted successfully"
-        );
 
-        setIsDeleteOpen(false);
+            onDelete(
+                opportunity.id
+            );
+
+
+            toast.success(
+                "Opportunity deleted successfully"
+            );
+
+
+            setIsDeleteOpen(false);
+
+
+        } catch(error){
+
+            console.error(error);
+
+
+            toast.error(
+                "Failed to delete opportunity"
+            );
+
+        }
 
     };
-
 
     return (
         <>

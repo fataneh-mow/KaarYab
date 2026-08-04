@@ -1,10 +1,9 @@
 import { Opportunity } from "@/types/opportunity";
 
-
 const STORAGE_KEY = "kaaryab_saved_opportunities";
 
 
-export function getSavedOpportunities():Opportunity[]{
+export function getSavedOpportunities(): Opportunity[] {
 
     if(typeof window === "undefined"){
         return [];
@@ -23,14 +22,12 @@ export function saveOpportunity(
     opportunity:Opportunity
 ){
 
-    const saved =
-        getSavedOpportunities();
+    const saved = getSavedOpportunities();
 
 
-    const exists =
-        saved.some(
-            item=>item.id === opportunity.id
-        );
+    const exists = saved.some(
+        item => item.id === opportunity.id
+    );
 
 
     if(exists){
@@ -50,21 +47,33 @@ export function saveOpportunity(
 
 
 
+
 export function removeSavedOpportunity(
-    opportunityId:string
+    id:string
 ){
 
-    const saved =
-        getSavedOpportunities();
+    const saved = getSavedOpportunities();
+
+
+    const filtered =
+        saved.filter(
+            item => item.id !== id
+        );
 
 
     localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify(
-            saved.filter(
-                item=>item.id !== opportunityId
-            )
-        )
+        JSON.stringify(filtered)
+    );
+
+}
+
+
+
+export function clearSavedOpportunities(){
+
+    localStorage.removeItem(
+        STORAGE_KEY
     );
 
 }
@@ -72,7 +81,7 @@ export function removeSavedOpportunity(
 
 
 export function isOpportunitySaved(
-    opportunityId:string
+    id:string
 ){
 
     const saved =
@@ -80,7 +89,7 @@ export function isOpportunitySaved(
 
 
     return saved.some(
-        item=>item.id === opportunityId
+        item=>item.id===id
     );
 
 }

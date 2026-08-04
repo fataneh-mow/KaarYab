@@ -43,7 +43,7 @@ export default function FeaturedOpportunities() {
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
-                    {opportunities.map((opportunity) => (
+                    {opportunities.slice(0,3).map((opportunity) => (
                         <OpportunityCard
                             key={opportunity.id}
                             opportunity={opportunity}

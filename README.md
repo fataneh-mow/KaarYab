@@ -198,10 +198,15 @@ Open the application:
 
 
 ## Screenshots 📸
-// add them in web
+<img width="3024" height="3410" alt="darkMode" src="https://github.com/user-attachments/assets/60ee7567-6f83-483f-985b-97ac7f04297f" />
+<img width="3024" height="3410" alt="userDash" src="https://github.com/user-attachments/assets/f09daedc-e4d1-4df8-8356-999435d51e4e" />
+<img width="3024" height="1584" alt="authPage" src="https://github.com/user-attachments/assets/ee78434c-1cbd-4130-8e0d-ac9105a1b969" />
+<img width="3024" height="6398" alt="oppsPage" src="https://github.com/user-attachments/assets/429008e2-5168-4334-b9da-1be0fd23d182" />
+<img width="3024" height="7848" alt="landingPage" src="https://github.com/user-attachments/assets/20ae5ff6-79df-44d7-b621-5681542ca9a3" />
+
 
 ## Live Demo Link 🌐
-
+https://kaar-yab-kappa.vercel.app/
 ## GitHub Link 🔗
 https://github.com/fataneh-mow/KaarYab.git
 

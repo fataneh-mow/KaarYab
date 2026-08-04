@@ -5,7 +5,6 @@ import OpportunityApplyCard from "@/components/oportunities/OpportunityApplyCard
 import OpportunityOverviewCard from "@/components/oportunities/OpportunityOverviewCard";
 import OpportunityDetailsHero from "@/components/oportunities/OpportunityDetailsHero";
 
-
 interface Props {
     params: Promise<{
         id:string;
@@ -44,12 +43,9 @@ export default async function OpportunityDetailsPage({
     return (
 
         <main>
-
             <OpportunityDetailsHero
                 opportunity={opportunity}
             />
-
-
 
             <section
                 className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8"

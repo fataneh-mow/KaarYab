@@ -1,12 +1,15 @@
 import { Opportunity } from "@/types/opportunity";
 import { getStoredOpportunities } from "@/lib/opportunityStorage";
-
+import {
+    saveStoredOpportunity,
+    updateStoredOpportunity,
+    deleteStoredOpportunity,
+} from "@/lib/opportunityStorage";
 
 const delay = (ms:number)=>
     new Promise(
         resolve=>setTimeout(resolve,ms)
     );
-
 
 
 export async function getOpportunities():Promise<Opportunity[]>{
@@ -117,103 +120,49 @@ export async function createOpportunity(
             "/api/opportunities",
             {
                 method:"POST",
-
                 headers:{
-                    "Content-Type":
-                    "application/json",
+                    "Content-Type":"application/json",
                 },
-
                 body:
                     JSON.stringify(opportunity),
-
             }
         );
 
 
-
     if(!response.ok){
-
         throw new Error(
             "Failed to create opportunity"
         );
-
     }
 
 
-
-    return response.json();
-
-}
+    const created =
+        await response.json();
 
 
 
-
-
-// UPDATE OPPORTUNITY
-export async function updateOpportunity(
-    id:string,
-    opportunity:Partial<Opportunity>
-):Promise<Opportunity>{
+    saveStoredOpportunity(created);
 
 
 
-    const response =
-        await fetch(
-            `/api/opportunities/${id}`,
-            {
-
-                method:"PUT",
-
-                headers:{
-                    "Content-Type":
-                    "application/json",
-                },
-
-                body:
-                    JSON.stringify(opportunity),
-
-            }
-        );
-
-
-
-    if(!response.ok){
-
-        throw new Error(
-            "Failed to update opportunity"
-        );
-
-    }
-
-
-
-    return response.json();
+    return created;
 
 }
-
-
-
 
 
 // DELETE OPPORTUNITY
 export async function deleteOpportunity(
     id:string
-):Promise<{
-    message:string;
-}> {
-
+):Promise<{message:string}> {
 
 
     const response =
         await fetch(
             `/api/opportunities/${id}`,
             {
-
                 method:"DELETE",
-
             }
         );
-
 
 
     if(!response.ok){
@@ -224,11 +173,12 @@ export async function deleteOpportunity(
 
     }
 
-
+    deleteStoredOpportunity(id);
 
     return response.json();
 
 }
+
 
 export async function updateOpportunityById(
     id:string,
@@ -246,11 +196,10 @@ export async function updateOpportunityById(
                     "Content-Type":"application/json",
                 },
 
-                body:JSON.stringify(opportunity),
-
+                body:
+                    JSON.stringify(opportunity),
             }
         );
-
 
 
     if(!response.ok){
@@ -262,6 +211,17 @@ export async function updateOpportunityById(
     }
 
 
-    return response.json();
+    const updated =
+        await response.json();
+
+
+
+    updateStoredOpportunity(updated);
+
+
+
+    return updated;
+
 
 }
+

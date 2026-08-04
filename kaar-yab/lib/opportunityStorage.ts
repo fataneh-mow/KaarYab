@@ -24,7 +24,7 @@ export function saveOpportunity(
 
 
 
-export function getStoredOpportunities():Opportunity[]{
+export function getStoredOpportunities(): Opportunity[] {
 
     if(typeof window === "undefined"){
         return [];
@@ -102,6 +102,89 @@ export function deleteOpportunity(
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(filtered)
+    );
+
+}
+
+export function saveStoredOpportunity(
+    opportunity: Opportunity
+){
+
+    const existing =
+        getStoredOpportunities();
+
+
+    const updated = [
+        opportunity,
+        ...existing.filter(
+            item => item.id !== opportunity.id
+        )
+    ];
+
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(updated)
+    );
+
+}
+
+export function updateStoredOpportunity(
+    opportunity: Opportunity
+){
+
+    const existing =
+        getStoredOpportunities();
+
+
+    const updated =
+        existing.map(
+            item =>
+            item.id === opportunity.id
+            ? opportunity
+            : item
+        );
+
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(updated)
+    );
+
+}
+
+export function deleteStoredOpportunity(
+    id: string
+) {
+
+    const existing =
+        getStoredOpportunities();
+
+
+    console.log("DELETE ID:", id);
+
+    console.log(
+        "BEFORE DELETE:",
+        existing
+    );
+
+
+    const updated =
+        existing.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    console.log(
+        "AFTER DELETE:",
+        updated
+    );
+
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(updated)
     );
 
 }

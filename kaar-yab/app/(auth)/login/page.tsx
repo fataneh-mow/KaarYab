@@ -227,17 +227,6 @@ export default function LoginPage() {
                         Remember me
 
                     </label>
-
-
-
-                    <Link
-                        href="/forgot-password"
-                        className="text-sky-600 hover:text-sky-700"
-                    >
-                        Forgot password?
-                    </Link>
-
-
                 </div>
 
 

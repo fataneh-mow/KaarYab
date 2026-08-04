@@ -23,13 +23,8 @@ export default function AuthLayout({
                 <div
                     className="mb-8 flex justify-between items-center"
                 >
-
-                    <Link href="/">
-                        <Logo />
-                    </Link>
+                    <Logo />
                     <ThemeToggle />
-
-
                 </div>
 
 

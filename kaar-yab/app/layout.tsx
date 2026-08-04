@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
+import ReduxProvider from "@/store/provider";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -47,11 +48,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <ReduxProvider>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </ReduxProvider>
         </ThemeProvider>
       </body>
     </html>

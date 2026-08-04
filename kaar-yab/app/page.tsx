@@ -1,8 +1,14 @@
-
-export default function Home() {
+import Hero from "@/components/home/Hero";
+import FeaturedOpportunities from "@/components/home/FeaturedOpportunities";
+import Categories from "@/components/home/Categories";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+export default function HomePage() {
   return (
-    <div>
-      Test
-    </div>
+    <>
+      <Hero />
+      <FeaturedOpportunities />
+      <Categories />
+      <WhyChooseUs />
+    </>
   );
 }

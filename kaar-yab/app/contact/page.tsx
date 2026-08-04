@@ -1,12 +1,26 @@
-import ContactHero from "@/components/contact/ContactHero";
+import CommonHero from "@/components/common/CommonHero";
 import ContactInfo from "@/components/contact/ContactInfo";
 import ContactForm from "@/components/contact/ContactForm";
-
 
 export default function ContactPage() {
     return (
         <main>
-            <ContactHero />
+            <CommonHero
+
+                badge="Contact KaarYab"
+
+                title={
+                    <>
+                        Get In Touch
+                        <span className="block text-sky-300">
+                            We Are Here To Help
+                        </span>
+                    </>
+                }
+
+                description="Have questions or suggestions? Contact our team and we will get back to you."
+
+            />
             <section
                 className="bg-slate-50 py-20 dark:bg-slate-900"
             >

@@ -248,9 +248,9 @@ export default function DashboardLayout({
 
 
                         <DashboardLink
-                            href="/opportunities"
+                            href="/dashboard/my-opportunities"
                             icon={Briefcase}
-                            label="Opportunities"
+                            label="My Opportunities"
                         />
 
 

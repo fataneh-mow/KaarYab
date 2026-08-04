@@ -27,7 +27,7 @@ export default function Footer() {
 
                                 return (
                                     <Link
-                                        key={social.href}
+                                        key={crypto.randomUUID()}
                                         href={social.href}
                                         className="flex size-10 items-center justify-center rounded-xl border border-slate-200 transition hover:border-sky-500 hover:bg-sky-600 hover:text-white dark:border-slate-700"
                                     >

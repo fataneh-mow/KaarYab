@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { Button, Input } from "@/components/common";
-import { contactSchema, ContactFormData } from "@/lib/validations";
+import { contactSchema, ContactFormData } from "@/lib/validations/validationContactForm";
 
 export default function ContactForm() {
 

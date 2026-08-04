@@ -1,39 +1,132 @@
-import { InputHTMLAttributes } from "react";
+"use client";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
-    error?: string;
-}
+import {
+    forwardRef,
+    useState,
+} from "react";
 
-export default function Input({
-    label,
-    error,
-    className = "",
-    id,
-    ...props
-}: InputProps) {
+import {
+    Eye,
+    EyeOff,
+} from "lucide-react";
+
+
+interface InputProps
+    extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+
+
+const Input = forwardRef<HTMLInputElement, InputProps>(
+(
+    {
+        type,
+        className = "",
+        ...props
+    },
+    ref
+) => {
+
+
+    const [showPassword, setShowPassword] = useState(false);
+
+
+
+    const isPassword =
+        type === "password";
+
+
+
     return (
-        <div className="flex w-full flex-col gap-2">
-            {label && (
-                <label
-                    htmlFor={id}
-                    className="text-sm font-medium text-slate-700 dark:text-slate-200"
-                >
-                    {label}
-                </label>
-            )}
+
+        <div
+            className="relative"
+        >
 
             <input
-                id={id}
-                className={`${error ? "border-red-500 focus:ring-red-500" : "border-slate-300 focus:ring-sky-500"} h-11 w-full rounded-lg border bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 ${className}`}
+
+                ref={ref}
+
+                type={
+                    isPassword
+                        ? (
+                            showPassword
+                                ? "text"
+                                : "password"
+                        )
+                        : type
+                }
+
+                className={`
+                    w-full
+                    rounded-xl
+                    border
+                    border-slate-200
+                    bg-white
+                    px-4
+                    py-3
+                    text-slate-900
+                    outline-none
+                    transition
+                    focus:border-sky-500
+                    dark:border-slate-700
+                    dark:bg-slate-900
+                    dark:text-white
+                    ${isPassword ? "pr-12" : ""}
+                    ${className}
+                `}
+
                 {...props}
+
             />
 
-            {error && (
-                <p className="text-sm text-red-500">
-                    {error}
-                </p>
-            )}
+
+
+            {
+                isPassword && (
+
+                    <button
+
+                        type="button"
+
+                        onClick={() =>
+                            setShowPassword(
+                                (prev)=>!prev
+                            )
+                        }
+
+                        className="
+                        absolute
+                        right-3
+                        top-1/2
+                        -translate-y-1/2
+                        text-slate-500
+                        hover:text-sky-600
+                        dark:text-slate-400
+                        "
+
+                    >
+
+                        {
+                            showPassword
+                                ? <EyeOff size={20}/>
+                                : <Eye size={20}/>
+                        }
+
+
+                    </button>
+
+                )
+            }
+
+
         </div>
+
     );
-}
+
+});
+
+
+Input.displayName = "Input";
+
+
+export default Input;

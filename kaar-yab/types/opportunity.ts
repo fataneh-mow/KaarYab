@@ -21,33 +21,31 @@ export enum OpportunityType {
 }
 
 export interface Opportunity {
-  id: string;
 
-  title: string;
+    id:string;
 
-  organization: string;
+    title:string;
 
-  category: OpportunityCategory;
- 
-  status: OpportunityStatus;
+    organization:string;
 
-  location: string;
+    category:string;
 
-  type: OpportunityType;
+    location:string;
 
-  deadline: string;
+    type:string;
 
-  description: string;
+    deadline:string;
 
-  requirements: string[];
+    description:string;
 
-  applyLink: string;
+    requirements:string[];
 
-  tags: string[];
+    applyLink:string;
 
-  featured: boolean;
+    tags:string[];
 
-  createdAt: string;
+    createdBy:string;
 
-  updatedAt?: string;
+    createdAt:string;
+
 }

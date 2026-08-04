@@ -6,9 +6,7 @@ import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 import ReduxProvider from "@/store/provider";
-
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import AuthInitializer from "@/components/auth/AuthInitializer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +34,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} flex min-h-screen flex-col`}>
         <Toaster
-          position="top-right"
+          position="top-center"
           reverseOrder={false}
           toastOptions={{
             duration: 3000,
@@ -49,11 +47,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReduxProvider>
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
+            <AuthInitializer />
+            {children}
           </ReduxProvider>
         </ThemeProvider>
       </body>

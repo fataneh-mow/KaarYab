@@ -24,7 +24,7 @@ export function saveOpportunity(
 
 
 
-function getStoredOpportunities():Opportunity[]{
+export function getStoredOpportunities():Opportunity[]{
 
     if(typeof window === "undefined"){
         return [];

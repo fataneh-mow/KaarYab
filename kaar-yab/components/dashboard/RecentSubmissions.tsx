@@ -1,86 +1,134 @@
 "use client";
 
 import {
-    CalendarDays,
+    useEffect,
+    useState,
+} from "react";
+
+import {
+    getStoredOpportunities,
+} from "@/lib/opportunityStorage";
+
+import {
+    useAuth,
+} from "@/hooks/useAuth";
+
+import {
+    Opportunity,
+} from "@/types/opportunity";
+
+import {
     MapPin,
-    ExternalLink,
+    CalendarDays,
+    BriefcaseBusiness,
 } from "lucide-react";
-import Link from "next/link";
-import { submissions } from "@/data/recentSubmissions";
 
 export default function RecentSubmissions(){
+    const {
+        user,
+    } = useAuth();
+    const [
+        submissions,
+        setSubmissions,
+    ] = useState<Opportunity[]>([]);
+
+    useEffect(()=>{
+        if(!user){
+            return;
+        }
+        const opportunities =
+            getStoredOpportunities();
+
+        const userOpportunities =
+            opportunities
+                .filter(
+                    opportunity =>
+                        opportunity.createdBy === user.id
+                )
+                .sort(
+                    (a,b)=>
+                        new Date(b.createdAt).getTime()
+                        -
+                        new Date(a.createdAt).getTime()
+                )
+                .slice(0,5);
+        setSubmissions(
+            userOpportunities
+        );
+    },[
+        user,
+    ]);
     return (
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-            <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center justify-between">
                 <div>
+
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                         Recent Submissions
                     </h2>
+
                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                        Track the opportunities you submitted recently
+                        Your latest submitted opportunities
                     </p>
+
                 </div>
+                <BriefcaseBusiness
+                    size={24}
+                    className="text-sky-600"
+                />
             </div>
-            <div className="space-y-4">
-                {
-                    submissions.map((submission)=>(
-                        <div
-                            key={submission.id}
-                            className="flex flex-col gap-4 rounded-2xl border border-slate-200 p-5 transition hover:border-sky-300 hover:shadow-md sm:flex-row sm:items-center sm:justify-between dark:border-slate-800"
-                        >
-                            <div className="space-y-2">
-                                <h3 className="font-semibold text-slate-900 dark:text-white">
-                                    {submission.title}
-                                </h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">
-                                    {submission.organization}
-                                </p>
-                                <div className="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400">
-                                    <span className="flex items-center gap-1">
-                                        <MapPin size={15}/>
-                                        {submission.location}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                        <CalendarDays size={15}/>
-                                        {submission.date}
-                                    </span>
-
-                                </div>
-                            </div>
-
-                            <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
-                                <span
-                                    className={`
-                                    rounded-full
-                                    px-3
-                                    py-1
-                                    text-xs
-                                    font-semibold
-                                    ${
-                                        submission.status === "Approved"
-                                        ? "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300"
-                                        : submission.status === "Rejected"
-                                        ? "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300"
-                                        : "bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300"
-                                    }
-                                    `}
-                                >
-                                    {submission.status}
-                                </span>
-                                <Link
-                                    href={`/opportunities/${submission.id}`}
-                                    className="flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-700"
-                                >
-                                    Details
-                                    <ExternalLink size={15}/>
-                                </Link>
-
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
+            {
+                submissions.length === 0 ? (
+                    <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-6 text-center dark:border-slate-700">
+                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                            No submitted opportunities yet.
+                        </p>
+                    </div>
+                ) : (
+                    <div className="mt-6 space-y-4">
+                        {
+                            submissions.map(
+                                opportunity => (
+                                    <div
+                                        key={opportunity.id}
+                                        className="group rounded-2xl border border-slate-200 p-5 transition hover:border-sky-300 hover:shadow-md dark:border-slate-800 dark:hover:border-sky-700"
+                                    >
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div>
+                                                <h3 className="font-bold text-slate-900 dark:text-white">
+                                                    {opportunity.title}
+                                                </h3>
+                                                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                                                    {opportunity.organization}
+                                                </p>
+                                            </div>
+                                            <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700 dark:bg-sky-950 dark:text-sky-300">
+                                                {opportunity.category}
+                                            </span>
+                                        </div>
+                                        <div className="mt-4 flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
+                                            <div className="flex items-center gap-2">
+                                                <MapPin size={15}/>
+                                                {opportunity.location}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <BriefcaseBusiness size={15}/>
+                                                {opportunity.type}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <CalendarDays size={15}/>
+                                                {new Date(
+                                                    opportunity.createdAt
+                                                ).toLocaleDateString()}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            )
+                        }
+                    </div>
+                )
+            }
         </section>
     );
-
 }

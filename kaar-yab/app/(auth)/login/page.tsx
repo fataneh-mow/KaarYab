@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
     useForm,
@@ -19,10 +20,33 @@ import {
     loginSchema,
     LoginFormData,
 } from "@/lib/validations/loginSchema";
+
 import toast from "react-hot-toast";
+
+import {
+    findUser,
+} from "@/lib/userStorage";
+
+import {
+    saveAuthUser,
+} from "@/lib/authStorage";
+
+import {
+    useAppDispatch,
+} from "@/hooks/redux";
+
+import {
+    login,
+} from "@/store/slices/authSlice";
 
 
 export default function LoginPage() {
+
+    const router = useRouter();
+
+    const dispatch = useAppDispatch();
+
+
     const {
         register,
         handleSubmit,
@@ -41,16 +65,71 @@ export default function LoginPage() {
 
     });
 
+
+
     const onSubmit = async (
-        data:LoginFormData
+        data: LoginFormData
     ) => {
-        console.log(data);
-        toast.success("Welcome back")
+
+
+        const user = findUser(
+            data.email,
+            data.password
+        );
+
+
+
+        if(!user){
+
+            toast.error(
+                "Invalid email or password"
+            );
+
+            return;
+
+        }
+
+
+
+        const authenticatedUser = {
+            id:user.id,
+            name:user.name,
+            email:user.email,
+            role:user.role,
+        };
+
+
+
+        // update redux
+        dispatch(
+            login(authenticatedUser)
+        );
+
+
+
+        // save logged user
+        saveAuthUser(
+            authenticatedUser
+        );
+
+
+
+        toast.success(
+            `Welcome back ${user.name}`
+        );
+
+
+
+        router.push("/dashboard");
+
     };
+
+
 
     return (
 
         <div>
+
 
             <div
                 className="text-center"
@@ -72,10 +151,13 @@ export default function LoginPage() {
 
             </div>
 
+
+
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="mt-8 space-y-5"
             >
+
 
 
                 <div>
@@ -85,6 +167,7 @@ export default function LoginPage() {
                         placeholder="Email address"
                         {...register("email")}
                     />
+
 
                     {
                         errors.email && (
@@ -96,15 +179,21 @@ export default function LoginPage() {
                         )
                     }
 
+
                 </div>
 
+
+
+
                 <div>
+
 
                     <Input
                         type="password"
                         placeholder="Password"
                         {...register("password")}
                     />
+
 
                     {
                         errors.password && (
@@ -116,7 +205,11 @@ export default function LoginPage() {
                         )
                     }
 
+
                 </div>
+
+
+
 
                 <div
                     className="flex items-center justify-between text-sm"
@@ -147,7 +240,11 @@ export default function LoginPage() {
 
                 </div>
 
+
+
+
                 <Button
+                    type="submit"
                     className="w-full"
                 >
 
@@ -158,7 +255,12 @@ export default function LoginPage() {
                     }
 
                 </Button>
+
+
             </form>
+
+
+
 
             <p
                 className="mt-8 text-center text-sm text-slate-600 dark:text-slate-400"
@@ -174,6 +276,7 @@ export default function LoginPage() {
                 >
                     Create account
                 </Link>
+
 
             </p>
 

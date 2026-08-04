@@ -51,7 +51,6 @@ export default function SignupForm() {
             id: uuid(),
             name: data.name,
             email: data.email,
-            password: data.password,
             role: "user",
         };
 

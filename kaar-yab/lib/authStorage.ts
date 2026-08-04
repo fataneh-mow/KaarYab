@@ -1,14 +1,12 @@
 import type { User } from "@/types/auth";
 
 
-const AUTH_KEY = "kaaryab_auth";
+const AUTH_KEY = "kaaryab_current_user";
 
 
-
-export function saveAuthUser(user: User) {
-
-    if(typeof window === "undefined") return;
-
+export function saveAuthUser(
+    user: User
+) {
 
     localStorage.setItem(
         AUTH_KEY,
@@ -21,31 +19,22 @@ export function saveAuthUser(user: User) {
 
 export function getAuthUser(): User | null {
 
-    if(typeof window === "undefined") {
+    const user =
+        localStorage.getItem(AUTH_KEY);
 
+
+    if(!user){
         return null;
-
     }
 
 
-    const user =
-        localStorage.getItem(
-            AUTH_KEY
-        );
-
-
-    return user
-        ? JSON.parse(user)
-        : null;
+    return JSON.parse(user);
 
 }
 
 
 
-export function removeAuthUser() {
-
-    if(typeof window === "undefined") return;
-
+export function removeAuthUser(){
 
     localStorage.removeItem(
         AUTH_KEY

@@ -1,9 +1,7 @@
 "use client";
 
-import {
-    useEffect,
-} from "react";
 
+import { useEffect } from "react";
 
 import {
     useAppDispatch,
@@ -26,16 +24,19 @@ export default function AuthInitializer(){
     const dispatch = useAppDispatch();
 
 
-
     useEffect(()=>{
 
         const user =
             getAuthUser();
 
 
-        dispatch(
-            setUser(user)
-        );
+        if(user){
+
+            dispatch(
+                setUser(user)
+            );
+
+        }
 
 
     },[dispatch]);

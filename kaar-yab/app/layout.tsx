@@ -6,9 +6,7 @@ import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 import ReduxProvider from "@/store/provider";
-
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import AuthInitializer from "@/components/auth/AuthInitializer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,6 +47,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReduxProvider>
+            <AuthInitializer />
             {children}
           </ReduxProvider>
         </ThemeProvider>

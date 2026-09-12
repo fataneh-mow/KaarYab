@@ -27,7 +27,7 @@ export default function EmptyState(){
 
             <h2 className="mt-5 text-2xl font-bold text-slate-900 dark:text-white">
 
-                No opportunities yet
+                No opportunities yet, this is for testing added some new things
 
             </h2>
 
